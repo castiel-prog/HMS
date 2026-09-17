@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net10.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<UserSecretsId>cbd7938c-6280-4517-b42f-2cac486e5770</UserSecretsId>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+		<DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
+	</PropertyGroup>
+
+	<ItemGroup>
+	<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+	<PackageReference Include="BCrypt.Net-Next" Version="4.2.0" />
+	<PackageReference Include="jose-jwt" Version="5.3.0" />
+	<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.11" />
+	<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.10" />
+	<PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.22.0" />
+	<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.23.0" />
+	<PackageReference Include="Paket.Core" Version="10.3.1" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="10.2.3" />
+		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.22.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\HMS.Application\HMS.Application.csproj" />
+		<ProjectReference Include="..\HMS.Infrastructure\HMS.Infrastructure.csproj" />
+	</ItemGroup>
+
+</Project>

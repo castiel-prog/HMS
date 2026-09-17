@@ -1,0 +1,9 @@
+<Solution>
+  <Project Path="docker-compose.dcproj">
+    <Build />
+  </Project>
+  <Project Path="HMS.API/HMS.API.csproj" />
+  <Project Path="HMS.Application/HMS.Application.csproj" />
+  <Project Path="HMS.Domain/HMS.Domain.csproj" />
+  <Project Path="HMS.Infrastructure/HMS.Infrastructure.csproj" />
+</Solution>

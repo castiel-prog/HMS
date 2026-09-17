@@ -1,0 +1,45 @@
+services:
+  sql-server:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: hms-sqlserver
+    environment:
+      ACCEPT_EULA: Y
+      MSSQL_SA_PASSWORD: "YourSecurePassword123!"
+      MSSQL_PID: Developer
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    healthcheck:
+      test: /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "YourSecurePassword123!" -Q "SELECT 1"
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - hms-network
+
+  hms-api:
+    build:
+      context: .
+      dockerfile: HMS.API/Dockerfile
+    container_name: hms-api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5000
+      - ConnectionStrings__DefaultConnection=Server=sql-server,1433;Database=HmsDatabase;User Id=sa;Password=YourSecurePassword123!;Encrypt=false;TrustServerCertificate=true;
+    ports:
+      - "5000:5000"
+      - "5001:5001"
+    depends_on:
+      sql-server:
+        condition: service_healthy
+    networks:
+      - hms-network
+    restart: unless-stopped
+
+volumes:
+  sqlserver_data:
+
+networks:
+  hms-network:
+    driver: bridge
