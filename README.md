@@ -1,3 +1,3 @@
 Hotel Management System
 cool hotel management
-fr
+for real
