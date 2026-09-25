@@ -15,15 +15,13 @@ jobs:
       
       - name: Deploy to VM
         env:
-          DEPLOY_KEY: ${{ secrets.VM_DEPLOY_KEY }}
           VM_HOST: ${{ secrets.VM_HOST }}
           VM_USER: ${{ secrets.VM_USER }}
+          VM_PASSWORD: ${{ secrets.VM_PASSWORD }}
         run: |
-          mkdir -p ~/.ssh
-          echo "$DEPLOY_KEY" > ~/.ssh/deploy_key
-          chmod 600 ~/.ssh/deploy_key
-          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $VM_USER@$VM_HOST << 'EOF'
+          sudo apt-get install -y sshpass
+          sshpass -p "$VM_PASSWORD" ssh -o StrictHostKeyChecking=no $VM_USER@$VM_HOST << 'EOF'
             cd ~/app
             git pull origin main
-            echo "Deployed successfully!"
+            echo "✅ Deployed successfully!"
           EOF
