@@ -20,7 +20,7 @@ jobs:
           VM_PASSWORD: ${{ secrets.VM_PASSWORD }}
         run: |
           sudo apt-get install -y sshpass
-          sshpass -p "$VM_PASSWORD" ssh -o StrictHostKeyChecking=no $VM_USER@$VM_HOST << 'EOF'
+          sshpass -p "$VM_PASSWORD" ssh -v -o StrictHostKeyChecking=no $VM_USER@$VM_HOST << 'EOF'
             cd ~/app
             git pull origin main
             echo "✅ Deployed successfully!"
