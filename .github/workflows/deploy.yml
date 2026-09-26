@@ -13,15 +13,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       
-      - name: Deploy to VM
+      - name: Deploy to Droplet
         env:
           VM_HOST: ${{ secrets.VM_HOST }}
           VM_USER: ${{ secrets.VM_USER }}
           VM_PASSWORD: ${{ secrets.VM_PASSWORD }}
         run: |
           sudo apt-get install -y sshpass
-          sshpass -p "$VM_PASSWORD" ssh -v -o StrictHostKeyChecking=no $VM_USER@$VM_HOST << 'EOF'
+          sshpass -p "$VM_PASSWORD" ssh -o StrictHostKeyChecking=no $VM_USER@$VM_HOST << 'EOF'
             cd ~/app
             git pull origin main
-            echo "✅ Deployed successfully!"
+            docker-compose down
+            docker-compose up -d
+            echo "✅ Deployed successfully with Docker!"
           EOF
