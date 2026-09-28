@@ -34,10 +34,21 @@ namespace HMS.Application.Services
             _jwtExpirationMinutes = jwtExpirationMinutes;
         }
 
-        public Task<AuthResponseDto> RegisterGuestAsync(RegisterDto registerDto)
+        public async Task<AuthResponseDto> RegisterGuestAsync(RegisterDto registerDto)
         {
             registerDto.Role = "Guest";
-            return RegisterAsync(registerDto);
+
+            // Require guest-specific fields: FirstName, LastName, PhoneNumber
+            if (string.IsNullOrWhiteSpace(registerDto.FirstName))
+                throw new Exception("First name is required for guest registration");
+
+            if (string.IsNullOrWhiteSpace(registerDto.LastName))
+                throw new Exception("Last name is required for guest registration");
+
+            if (string.IsNullOrWhiteSpace(registerDto.PhoneNumber))
+                throw new Exception("Phone number is required for guest registration");
+
+            return await RegisterAsync(registerDto);
         }
 
         public async Task<AuthResponseDto> RegisterAdminAsync(RegisterDto registerDto)
