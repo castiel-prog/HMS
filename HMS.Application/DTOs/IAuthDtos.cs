@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.ComponentModel.DataAnnotations;
 
 namespace HMS.Application.DTOs
 {
@@ -8,13 +9,30 @@ namespace HMS.Application.DTOs
     {
         public class RegisterDto
         {
+            [Required]
             public string Email { get; set; } = null!;
+
+            [Required]
             public string PhoneNumber { get; set; } = null!;
+
+            [Required]
             public string Password { get; set; } = null!;
+
+            [Required]
             public string ConfirmPassword { get; set; } = null!;
+
             public string Role { get; set; } = "Guest";
-            public string? FirstName { get; set; }
-            public string? LastName { get; set; }
+
+            [Required]
+            public string FirstName { get; set; } = null!;
+
+            [Required]
+            public string LastName { get; set; } = null!;
+
+            // Optional guest address fields: should appear in Swagger but may be omitted
+            public string? Address { get; set; }
+            public string? City { get; set; }
+            public string? Country { get; set; }
         }
 
         public class LoginDto
